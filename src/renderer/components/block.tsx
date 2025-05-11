@@ -15,7 +15,7 @@ export const BlockComponent: React.FC<BlockProps> = ({
   onEnter,
 }) => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' || e.key === 'Return') {
       e.preventDefault();
       onEnter(block.id);
     }
@@ -29,9 +29,9 @@ export const BlockComponent: React.FC<BlockProps> = ({
         onChange(block.id, (e.target as HTMLDivElement).innerText)
       }
       onKeyDown={handleKeyDown}
-      style={block.type == 'heading1' ? H1_STYLE : {}}
-    >
-      {block.content}
-    </div>
+      className={
+        block.type === 'heading1' ? 'text-3xl font-bold' : 'text-white'
+      }
+    />
   );
 };
