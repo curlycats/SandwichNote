@@ -1,5 +1,7 @@
-import React, { useRef, useEffect } from 'react';
+// src/Block.tsx
+import React from 'react';
 import { Block } from '../types/types';
+import { H1_STYLE } from '../styles/objects';
 
 interface BlockProps {
   block: Block;
@@ -12,20 +14,6 @@ export const BlockComponent: React.FC<BlockProps> = ({
   onChange,
   onEnter,
 }) => {
-  const divRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (divRef.current && divRef.current.innerText !== block.content) {
-      divRef.current.innerText = block.content;
-    }
-  }, [block.content]);
-
-  const handleInput = () => {
-    if (divRef.current) {
-      onChange(block.id, divRef.current.innerText);
-    }
-  };
-
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -35,15 +23,15 @@ export const BlockComponent: React.FC<BlockProps> = ({
 
   return (
     <div
-      ref={divRef}
       contentEditable
       suppressContentEditableWarning
-      onInput={handleInput}
-      onKeyDown={handleKeyDown}
-      className={
-        block.type === 'heading1' ? 'text-3xl font-bold' : 'text-white'
+      onInput={(e) =>
+        onChange(block.id, (e.target as HTMLDivElement).innerText)
       }
-
-    />
+      onKeyDown={handleKeyDown}
+      style={block.type == 'heading1' ? H1_STYLE : {}}
+    >
+      {block.content}
+    </div>
   );
 };
