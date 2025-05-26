@@ -1,5 +1,5 @@
 import React from 'react';
-import { $getRoot, $getSelection } from 'lexical';
+import { $getRoot, $getSelection, EditorState } from 'lexical';
 import { useEffect } from 'react';
 
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
@@ -8,6 +8,10 @@ import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { CreateNote, InitDatabase, UpdateNote } from '../../db/modifications';
+import { OnChangeSaveToDBPlugin } from '../lexicalPlugins/saveNote';
+import { LoadFromDBPlugin } from '../lexicalPlugins/loadNote';
 
 const theme = {
   // Theme styling goes here
@@ -22,6 +26,15 @@ const theme = {
 // try to recover gracefully without losing user data.
 function onError(error: Error) {
   console.error(error);
+}
+
+async function saveToDB(editorState: EditorState) {
+  const editorJson = editorState.toJSON();
+  const db = await InitDatabase('/Users/Flysandwich/Desktop/sandwichNote');
+  const id = 1;
+  console.log(`Saving Note ${id} to DB...`);
+  await UpdateNote(db, id, editorJson);
+  console.log(`Saved`)
 }
 
 const LexicalTest = () => {
@@ -45,6 +58,8 @@ const LexicalTest = () => {
       />
       <HistoryPlugin />
       <AutoFocusPlugin />
+      <OnChangeSaveToDBPlugin onChange={saveToDB} />
+      <LoadFromDBPlugin noteId={1} />
     </LexicalComposer>
   );
 };
