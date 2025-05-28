@@ -1,6 +1,5 @@
 import React from 'react';
 import { $getRoot, $getSelection, EditorState } from 'lexical';
-import { useEffect } from 'react';
 
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
@@ -8,8 +7,6 @@ import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { CreateNote, InitDatabase, UpdateNote } from '../../db/modifications';
 import { OnChangeSaveToDBPlugin } from '../lexicalPlugins/saveNote';
 import { LoadFromDBPlugin } from '../lexicalPlugins/loadNote';
 
@@ -30,11 +27,13 @@ function onError(error: Error) {
 
 async function saveToDB(editorState: EditorState) {
   const editorJson = editorState.toJSON();
-  const db = await InitDatabase('/Users/Flysandwich/Desktop/sandwichNote');
+  const db = await window.electron.db.init(
+    '/Users/Flysandwich/Desktop/sandwichNote',
+  );
   const id = 1;
   console.log(`Saving Note ${id} to DB...`);
-  await UpdateNote(db, id, editorJson);
-  console.log(`Saved`)
+  await window.electron.db.updateNote(db, id, editorJson);
+  console.log(`Saved`);
 }
 
 const LexicalTest = () => {

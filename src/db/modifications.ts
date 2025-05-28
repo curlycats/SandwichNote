@@ -53,6 +53,7 @@ export async function UpdateNote(
   contentJson: object,
 ) {
   const jsonStr = JSON.stringify(contentJson);
+  console.log(jsonStr, db); 
   await db.run(
     `
     UPDATE notes
@@ -69,5 +70,6 @@ export async function LoadNotes(db: Database) {
 
 export async function LoadNote(db: Database, id: number) {
   const row = await db.get<db_Note>(`SELECT * FROM notes WHERE id = ?`, [id]);
+  console.log(row);
   return row;
 }
