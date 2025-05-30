@@ -15,7 +15,7 @@ export async function InitDatabase(dirPath: string): Promise<Database> {
   const db = await open({
     filename: dbPath,
     driver: sqlite3.Database,
-  });
+  }); 
 
   // 创建 notes 表
   await db.exec(`
@@ -53,7 +53,7 @@ export async function UpdateNote(
   contentJson: object,
 ) {
   const jsonStr = JSON.stringify(contentJson);
-  console.log(jsonStr, db); 
+  console.log(jsonStr, db);
   await db.run(
     `
     UPDATE notes

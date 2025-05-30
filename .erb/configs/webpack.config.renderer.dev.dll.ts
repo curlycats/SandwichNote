@@ -13,6 +13,10 @@ import checkNodeEnv from '../scripts/check-node-env';
 checkNodeEnv('development');
 
 const dist = webpackPaths.dllPath;
+const d = Object.keys(require('../../package.json').dependencies || {});
+
+// exclude @lexical/react
+const dllDependencies = d.filter((dep) => !dep.startsWith('@lexical'));
 
 const configuration: webpack.Configuration = {
   context: webpackPaths.rootPath,
@@ -31,7 +35,7 @@ const configuration: webpack.Configuration = {
   module: require('./webpack.config.renderer.dev').default.module,
 
   entry: {
-    renderer: Object.keys(dependencies || {}),
+    renderer: dllDependencies,
   },
 
   output: {

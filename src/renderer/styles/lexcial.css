@@ -3,10 +3,10 @@
  *        See https://github.com/webpack-contrib/sass-loader#imports
  */
 
- body {
-
-}
-
 .lexical-editor:focus {
   outline: none;
+}
+
+.toolbar-item {
+  @apply w-6 h-6 bg-blue-200 rounded  flex-grow-0 flex-shrink-0
 }
