@@ -46,7 +46,7 @@ const LexicalTest = () => {
     namespace: 'MyEditor',
     theme,
     onError,
-    nodes: [ParagraphNode, TextNode, HeadingNode],
+    nodes: [ParagraphNode, TextNode],
   };
 
   return (
@@ -59,7 +59,7 @@ const LexicalTest = () => {
       />
       {isLoaded && (
         <React.Fragment>
-          <MarkdownShortcutPlugin />
+          {/* <MarkdownShortcutPlugin /> */}
           <ToolbarPlugin />
           <OnChangeSaveToDBPlugin onChange={saveToDB} />
           <HistoryPlugin />

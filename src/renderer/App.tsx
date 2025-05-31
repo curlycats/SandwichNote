@@ -5,12 +5,14 @@ import './styles/lexcial.css';
 import './styles/global.css';
 import LexicalTest from './components/LexicalTest';
 import 'tailwindcss/tailwind.css';
+import BaseLayout from './layouts/baseLayout';
 
 const App: React.FC = () => {
   return (
-    <div className="bg-green-300 p-16">
-      <LexicalTest />
-    </div>
+    <BaseLayout />
+    // <div className="bg-green-300 p-16">
+    //   <LexicalTest />
+    // </div>
   );
 };
 
