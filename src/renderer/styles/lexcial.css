@@ -7,18 +7,72 @@
   outline: none;
 }
 
-.toolbar-item {
-  @apply w-6 h-6 bg-blue-200 rounded  flex-grow-0 flex-shrink-0
+
+.lex-h1 {
+  @apply py-2 font-bold text-3xl border-b border-black
 }
 
-.textBold {
+.lex-h2 {
+  @apply font-bold text-2xl
+}
+
+.lex-h3 {
+  @apply font-semibold text-xl
+}
+
+.lex-code {
+  @apply bg-gray-200 px-2 rounded text-black
+}
+
+.lex-listitem {
+  @apply pl-2
+}
+
+.lex-ul-1 {
+  list-style-type: disc;
+  margin-left: 22px;
+  list-style-position: outside;
+}
+
+.lex-ul-2 {
+  list-style-type: circle;
+  margin-left: 22px;
+  list-style-position: outside;
+}
+
+.lex-ul-3 {
+  list-style-type:square;
+  margin-left: 22px;
+  list-style-position: outside;
+}
+
+.lex-nested-listitem {
+  list-style-type: none;
+}
+
+.lex-nested-listitem::before,
+.lex-nested-listitem::after {
+  display: non;
+}
+
+.lex-ol {
+  list-style: decimal inside;
+  padding-left: 1rem;
+}
+
+
+.lex-a {
+  @apply text-blue-400
+}
+
+.lex-bold {
   @apply font-bold
 }
 
-.textItalic {
+.lex-italic {
   @apply italic text-gray-600
 }
 
-.textUnderline {
+.lex-underline {
   @apply underline
 }

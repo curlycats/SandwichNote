@@ -22,13 +22,14 @@ import { ListPlugin } from '@lexical/react/LexicalListPlugin';
 import { TableCellNode, TableNode, TableRowNode } from '@lexical/table';
 import { AutoLinkNode, LinkNode } from '@lexical/link';
 import { defaultTheme } from '../styles/theme';
+import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin';
+import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
 
 const theme = {
   // Theme styling goes here
   //...
   ltr: 'ltr',
   rtl: 'rtl',
-  paragraph: 'editor-paragraph',
 };
 
 // Catch any errors that occur during Lexical updates and log them
@@ -74,42 +75,46 @@ const LexicalTest = () => {
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
-      <LoadFromDBPlugin
-        noteId={1}
-        onLoaded={() => {
-          setIsLoaded(true);
-        }}
-      />
+      <div className="editor-container">
+        <LoadFromDBPlugin
+          noteId={1}
+          onLoaded={() => {
+            setIsLoaded(true);
+          }}
+        />
 
-      {isLoaded && (
-        <React.Fragment>
-          {/* Custom Plugins */}
-          <OnChangeSaveToDBPlugin onChange={saveToDB} />
+        {isLoaded && (
+          <React.Fragment>
+            {/* Custom Plugins */}
+            <OnChangeSaveToDBPlugin onChange={saveToDB} />
 
-          {/* Prebuild Plugins */}
-          <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
-          <ListPlugin />
-          <LinkPlugin />
-          <HistoryPlugin />
-          <AutoFocusPlugin />
+            {/* Prebuild Plugins */}
+            <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
+            <ListPlugin hasStrictIndent={false} />
+            <LinkPlugin />
+            <CheckListPlugin />
+            <TabIndentationPlugin />
+            <HistoryPlugin />
+            <AutoFocusPlugin />
 
-          {/* Core RichText plugin */}
-          <RichTextPlugin
-            contentEditable={
-              <ContentEditable
-                aria-placeholder={'Enter some text...'}
-                placeholder={
-                  <div className="absolute h-12 -translate-y-6 select-none text-gray-500 pointer-events-none">
-                    Enter some text...
-                  </div>
-                }
-                className="lexical-editor"
-              />
-            }
-            ErrorBoundary={LexicalErrorBoundary}
-          />
-        </React.Fragment>
-      )}
+            {/* Core RichText plugin */}
+            <RichTextPlugin
+              contentEditable={
+                <ContentEditable
+                  aria-placeholder={'Enter some text...'}
+                  placeholder={
+                    <div className="absolute h-12 -translate-y-6 select-none text-gray-500 pointer-events-none">
+                      Enter some text...
+                    </div>
+                  }
+                  className="lexical-editor"
+                />
+              }
+              ErrorBoundary={LexicalErrorBoundary}
+            />
+          </React.Fragment>
+        )}
+      </div>
     </LexicalComposer>
   );
 };
