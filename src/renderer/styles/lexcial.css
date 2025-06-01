@@ -10,3 +10,15 @@
 .toolbar-item {
   @apply w-6 h-6 bg-blue-200 rounded  flex-grow-0 flex-shrink-0
 }
+
+.textBold {
+  @apply font-bold
+}
+
+.textItalic {
+  @apply italic text-gray-600
+}
+
+.textUnderline {
+  @apply underline
+}

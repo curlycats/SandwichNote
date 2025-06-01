@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import TwoSections from './twoSections';
+import TwoSections from '../layoutComponents/twoSections';
+import LexicalTest from '../components/LexicalTest';
 
 const BaseLayout = () => {
   const minW = 200;
@@ -11,7 +12,9 @@ const BaseLayout = () => {
         maxWidth={maxW}
         leftSection={'wewe'}
         rightSection={
-          <TwoSections leftSection={'wood'} rightSection={'here lol'} />
+          <div className="p-4">
+            <LexicalTest />
+          </div>
         }
       />
     </div>

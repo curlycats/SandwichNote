@@ -59,7 +59,7 @@ const TwoSections: React.FC<TwoSectionProps> = ({
   return (
     <div className={`flex flex-nowrap w-full h-full`} ref={containerRef}>
       <div
-        className={`Layout-SidePanel h-full bg-blue-200 break-words`}
+        className={`Layout-SidePanel h-full bg-blue-200 overflow-auto`}
         style={{ width: sidebarWidth }}
       >
         {leftSection}
@@ -76,7 +76,9 @@ const TwoSections: React.FC<TwoSectionProps> = ({
           `}
         />
       </div>
-      <div className={`Layout-Content flex-1 bg-green-300`}>{rightSection}</div>
+      <div className={`Layout-Content flex-1 bg-green-300 overflow-auto`}>
+        {rightSection}
+      </div>
     </div>
   );
 };

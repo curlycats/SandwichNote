@@ -13,6 +13,15 @@ import { $createParagraphNode, ParagraphNode, TextNode } from 'lexical';
 import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import ToolbarPlugin from '../lexicalPlugins/toolbarPlugin';
+import { HeadingNode, QuoteNode } from '@lexical/rich-text';
+import { ListItemNode, ListNode } from '@lexical/list';
+import { TRANSFORMERS } from '@lexical/markdown';
+import { CodeHighlightNode, CodeNode } from '@lexical/code';
+import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin';
+import { ListPlugin } from '@lexical/react/LexicalListPlugin';
+import { TableCellNode, TableNode, TableRowNode } from '@lexical/table';
+import { AutoLinkNode, LinkNode } from '@lexical/link';
+import { defaultTheme } from '../styles/theme';
 
 const theme = {
   // Theme styling goes here
@@ -44,9 +53,23 @@ const LexicalTest = () => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const initialConfig = {
     namespace: 'MyEditor',
-    theme,
+    theme: { ...theme, ...defaultTheme },
     onError,
-    nodes: [ParagraphNode, TextNode],
+    nodes: [
+      ParagraphNode,
+      TextNode,
+      HeadingNode,
+      ListNode,
+      ListItemNode,
+      QuoteNode,
+      CodeNode,
+      CodeHighlightNode,
+      TableNode,
+      TableCellNode,
+      TableRowNode,
+      AutoLinkNode,
+      LinkNode,
+    ],
   };
 
   return (
@@ -57,18 +80,29 @@ const LexicalTest = () => {
           setIsLoaded(true);
         }}
       />
+
       {isLoaded && (
         <React.Fragment>
-          {/* <MarkdownShortcutPlugin /> */}
-          <ToolbarPlugin />
+          {/* Custom Plugins */}
           <OnChangeSaveToDBPlugin onChange={saveToDB} />
+
+          {/* Prebuild Plugins */}
+          <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
+          <ListPlugin />
+          <LinkPlugin />
           <HistoryPlugin />
           <AutoFocusPlugin />
+
+          {/* Core RichText plugin */}
           <RichTextPlugin
             contentEditable={
               <ContentEditable
                 aria-placeholder={'Enter some text...'}
-                placeholder={<div>Enter some text...</div>}
+                placeholder={
+                  <div className="absolute h-12 -translate-y-6 select-none text-gray-500 pointer-events-none">
+                    Enter some text...
+                  </div>
+                }
                 className="lexical-editor"
               />
             }
