@@ -6,13 +6,13 @@ import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
-import { OnChangeSaveToDBPlugin } from '../lexicalPlugins/saveNotePlugin';
-import { LoadFromDBPlugin } from '../lexicalPlugins/loadNotePlugin';
+import { OnChangeSaveToDBPlugin } from '../lexical/plugins/saveNotePlugin';
+import { LoadFromDBPlugin } from '../lexical/plugins/loadNotePlugin';
 import { EditorState } from 'lexical';
 import { $createParagraphNode, ParagraphNode, TextNode } from 'lexical';
 import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import ToolbarPlugin from '../lexicalPlugins/toolbarPlugin';
+import ToolbarPlugin from '../lexical/plugins/toolbarPlugin';
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { ListItemNode, ListNode } from '@lexical/list';
 import { TRANSFORMERS } from '@lexical/markdown';
@@ -54,7 +54,7 @@ const LexicalTest = () => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const initialConfig = {
     namespace: 'MyEditor',
-    theme: { ...theme, ...defaultTheme },
+    theme: defaultTheme,
     onError,
     nodes: [
       ParagraphNode,
