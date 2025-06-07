@@ -24,7 +24,7 @@ export function registerDBHandlers() {
 
   ipcMain.handle(
     C_DB.UPDATE_NOTE,
-    async (_event, id: number, content: object) => {
+    async (_event, id: number, content: object) => { 
       if (!dbInstance) dbInstance = await InitDatabase(dbPath);
       return await UpdateNote(dbInstance, id, content);
     },
