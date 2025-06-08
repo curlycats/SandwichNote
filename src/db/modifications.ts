@@ -17,7 +17,6 @@ export async function InitDatabase(dirPath: string): Promise<Database> {
     driver: sqlite3.Database,
   });
 
-  // 创建 notes 表
   await db.exec(`
     CREATE TABLE IF NOT EXISTS notes (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -31,12 +30,17 @@ export async function InitDatabase(dirPath: string): Promise<Database> {
   return db;
 }
 
-export async function CreateNote(db: Database, id?: number): Promise<number> {
+export async function LoadNote(db: Database, id?: number): Promise<db_Note> {
   if (id != null) {
     const isNoteExist = await IsNoteExist(db, id);
     if (isNoteExist) {
       console.log(`Note ID ${id} exist in DB ${db.config.filename}`);
-      return id;
+      // Fetch and return the existing note
+      const existingNote = await db.get<db_Note>(
+        `SELECT * FROM notes WHERE id = ?`,
+        [id],
+      );
+      return existingNote!;
     }
   }
   const result = await db.run(
@@ -44,31 +48,37 @@ export async function CreateNote(db: Database, id?: number): Promise<number> {
     INSERT INTO notes DEFAULT VALUES
     `,
   );
-  return result.lastID as number;
+  // Retrieve and return the newly created note
+  const newNote = await db.get<db_Note>(`SELECT * FROM notes WHERE id = ?`, [
+    result.lastID,
+  ]);
+  return newNote!;
 }
 
 export async function UpdateNote(
   db: Database,
   id: number,
   contentJson: object,
-) {
+): Promise<boolean> {
   const jsonStr = JSON.stringify(contentJson);
-  await db.run(
-    `
+  await db
+    .run(
+      `
     UPDATE notes
     SET content_json = ?, updated_at = CURRENT_TIMESTAMP
     WHERE id = ?
     `,
-    [jsonStr, id],
+      [jsonStr, id],
+    )
+    .catch((error) => {
+      console.error(`Failed to update note with ID ${id}:`, error);
+      return false;
+    });
+  return true;
+}
+
+export async function LoadNotes(db: Database): Promise<Array<db_Note>> {
+  return await db.all<Array<db_Note>>(
+    `SELECT * FROM notes ORDER BY updated_at DESC`,
   );
-}
-
-export async function LoadNotes(db: Database) {
-  return await db.all(`SELECT * FROM notes ORDER BY updated_at DESC`);
-}
-
-export async function LoadNote(db: Database, id: number) {
-  const row = await db.get<db_Note>(`SELECT * FROM notes WHERE id = ?`, [id]);
-  console.log(row);
-  return row;
 }

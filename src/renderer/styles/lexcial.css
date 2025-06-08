@@ -9,7 +9,7 @@
 
 
 .lex-h1 {
-  @apply py-2 font-bold text-3xl border-b border-black
+  @apply py-0.5 font-bold text-3xl border-b border-black
 }
 
 .lex-h2 {
@@ -21,7 +21,7 @@
 }
 
 .lex-text-code {
-@apply bg-gray-200 px-2 rounded text-black font-[Consolas]
+  @apply bg-gray-200 px-2 rounded text-black font-[Consolas]
 }
 
 .lex-listitem {
@@ -52,7 +52,7 @@
 
 .lex-nested-listitem::before,
 .lex-nested-listitem::after {
-  display: non;
+  display: none;
 }
 
 .lex-ol {
