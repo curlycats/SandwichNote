@@ -8,7 +8,7 @@ const TableView = () => {
   useEffect(() => {
     const fetchNotes = async () => {
       const db = await E.db.init('/Users/Flysandwich/Desktop/sandwichNote');
-      const tempNotes = await E.db.loadNotes(db);
+      const tempNotes = await E.db.loadNotes();
       setNotes(tempNotes);
     };
     fetchNotes();
@@ -18,8 +18,12 @@ const TableView = () => {
     <div>
       {notes.map((note) => {
         return (
-          <div key={note.id}>
-            {note.title}: {note.created_at.toString()}{' '}
+          <div
+            className="h-full flex"
+            key={note.id}
+            contentEditable="plaintext-only"
+          >
+            {note.title}: {note.created_at.toString()}
           </div>
         );
       })}

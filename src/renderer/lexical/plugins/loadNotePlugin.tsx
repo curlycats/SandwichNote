@@ -15,7 +15,7 @@ export function LoadFromDBPlugin({
   useEffect(() => {
     async function load() {
       const db = await E.db.init('/Users/Flysandwich/Desktop/sandwichNote');
-      const note = await E.db.loadNote(db, 1);
+      const note = await E.db.loadNote(1);
       console.log('note', note);
 
       if (note) {

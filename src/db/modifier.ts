@@ -5,30 +5,7 @@ import { open, Database } from 'sqlite';
 import { IsNoteExist } from './checkers';
 import { db_Note } from './types';
 
-export async function InitDatabase(dirPath: string): Promise<Database> {
-  if (!fs.existsSync(dirPath)) {
-    fs.mkdirSync(dirPath, { recursive: true });
-  }
 
-  const dbPath = path.join(dirPath, 'notes.db');
-
-  const db = await open({
-    filename: dbPath,
-    driver: sqlite3.Database,
-  });
-
-  await db.exec(`
-    CREATE TABLE IF NOT EXISTS notes (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      title TEXT,
-      content_json TEXT,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    );
-  `);
-
-  return db;
-}
 
 export async function LoadNote(db: Database, id?: number): Promise<db_Note> {
   if (id != null) {

@@ -46,7 +46,7 @@ async function saveToDB(editorState: EditorState) {
   );
   const id = 1;
   console.log(`Saving Note ${id} to DB...`);
-  await window.electron.db.updateNote(db, id, editorJson);
+  await window.electron.db.updateNote(id, editorJson);
   console.log(`Saved`);
 }
 

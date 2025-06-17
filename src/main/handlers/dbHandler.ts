@@ -1,11 +1,14 @@
 import { ipcMain } from 'electron';
-import * as db_mod from '../../db/modifications';
+import * as db_mod from '../../db/modifier';
+import * as db_initializer from '../../db/initializer';
 import { C_DB } from '../../constants/channels';
 import { db_Note } from '../../db/types';
 
-let dbInstance: Awaited<ReturnType<typeof InitDatabase>> | null = null;
 const dbPath = '/Users/Flysandwich/Desktop/sandwichNote';
-const { InitDatabase, LoadNote, UpdateNote, LoadNotes } = db_mod;
+const { LoadNote, UpdateNote, LoadNotes } = db_mod;
+const { InitDatabase } = db_initializer;
+
+let dbInstance: Awaited<ReturnType<typeof InitDatabase>> | null = null;
 
 export function registerDBHandlers() {
   ipcMain.handle(C_DB.INIT, async (_event, dirPath: string) => {
@@ -13,10 +16,13 @@ export function registerDBHandlers() {
     return true;
   });
 
-  ipcMain.handle(C_DB.LOAD_NOTE, async (_event, id: number): Promise<db_Note> => {
-    if (!dbInstance) dbInstance = await InitDatabase(dbPath);
-    return await LoadNote(dbInstance, id);
-  });
+  ipcMain.handle(
+    C_DB.LOAD_NOTE,
+    async (_event, id: number): Promise<db_Note> => {
+      if (!dbInstance) dbInstance = await InitDatabase(dbPath);
+      return await LoadNote(dbInstance, id);
+    },
+  );
 
   ipcMain.handle(
     C_DB.UPDATE_NOTE,

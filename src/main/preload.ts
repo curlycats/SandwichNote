@@ -9,11 +9,11 @@ const electronHandler = {
   db: {
     init: (dirPath: string): Promise<Database> =>
       ipcRenderer.invoke(C_DB.INIT, dirPath),
-    updateNote: (db: Database, id: number, content: object): Promise<db_Note> =>
+    updateNote: (id: number, content: object): Promise<db_Note> =>
       ipcRenderer.invoke(C_DB.UPDATE_NOTE, id, content),
-    loadNote: (db: Database, id: number): Promise<db_Note> =>
+    loadNote: (id: number): Promise<db_Note> =>
       ipcRenderer.invoke(C_DB.LOAD_NOTE, id),
-    loadNotes: (db: Database): Promise<Array<db_Note>> =>
+    loadNotes: (): Promise<Array<db_Note>> =>
       ipcRenderer.invoke(C_DB.LOAD_NOTES),
   },
 };
