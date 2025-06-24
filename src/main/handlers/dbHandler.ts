@@ -17,6 +17,13 @@ export function registerDBHandlers() {
   });
 
   ipcMain.handle(
+    C_DB.DROP_DB,
+    async (_event, dirPath: string): Promise<boolean> => {
+      return await db_initializer.DropDatabase(dirPath);
+    },
+  );
+
+  ipcMain.handle(
     C_DB.LOAD_NOTE,
     async (_event, id: number): Promise<db_Note> => {
       if (!dbInstance) dbInstance = await InitDatabase(dbPath);

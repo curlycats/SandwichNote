@@ -2,6 +2,7 @@
 
 export const C_DB = {
   INIT: 'db:init',
+  DROP_DB: 'db:drop',
   LOAD_NOTE: 'db:loadNote',
   UPDATE_NOTE: 'db:updateNote',
   CREATE_NOTE: 'db:createNote',

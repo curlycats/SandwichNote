@@ -11,13 +11,10 @@ const BaseLayout = () => {
       <TwoSections
         minWidth={minW}
         maxWidth={maxW}
-        leftSection={
-          <div>
-            <TableView />
-          </div>
-        }
+        leftSection={<div></div>}
         rightSection={
           <div className="p-4">
+            <TableView />
             <LexicalTest />
           </div>
         }

@@ -7,6 +7,8 @@ import { db_Note } from '../db/types';
 
 const electronHandler = {
   db: {
+    drop: (dirPath: string): Promise<boolean> =>
+      ipcRenderer.invoke(C_DB.DROP_DB, dirPath),
     init: (dirPath: string): Promise<Database> =>
       ipcRenderer.invoke(C_DB.INIT, dirPath),
     updateNote: (id: number, content: object): Promise<db_Note> =>
