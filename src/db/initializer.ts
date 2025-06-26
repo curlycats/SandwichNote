@@ -3,7 +3,6 @@ import fs from 'fs';
 import sqlite3 from 'sqlite3';
 import { open, Database } from 'sqlite';
 import { IsNoteExist } from './checkers';
-import { db_Note } from './types';
 
 export async function DropDatabase(dirPath: string): Promise<boolean> {
   const dbPath = path.join(dirPath, 'notes.db');
@@ -28,6 +27,7 @@ export async function InitDatabase(dirPath: string): Promise<Database> {
 
   let success = true;
   success = success && (await InitNoteTable(db));
+  success = success && (await InitNoteContentTable(db));
   success = success && (await InitPropertyTable(db));
   success = success && (await InitPropertyValueTable(db));
   success = success && (await InitNotePropertyRelationTable(db));
@@ -43,9 +43,25 @@ export async function InitNoteTable(db: Database): Promise<boolean> {
       CREATE TABLE IF NOT EXISTS notes (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT,
-        content_json TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+    return true;
+  } catch (e: any) {
+    console.error(`Failed to create notes table: ${e.message}`);
+    return false;
+  }
+}
+
+export async function InitNoteContentTable(db: Database): Promise<boolean> {
+  try {
+    await db.exec(`
+      CREATE TABLE IF NOT EXISTS note_content (
+        id INTEGER,
+        content_json TEXT,
+        FOREIGN KEY (id) REFERENCES notes(id),
+        PRIMARY KEY (id)
       );
     `);
     return true;

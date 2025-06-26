@@ -59,12 +59,12 @@ const TwoSections: React.FC<TwoSectionProps> = ({
   return (
     <div className={`flex flex-nowrap w-full h-full`} ref={containerRef}>
       <div
-        className={`Layout-SidePanel h-full bg-blue-200 overflow-auto`}
+        className={`Layout-SidePanel h-full overflow-auto`}
         style={{ width: sidebarWidth }}
       >
         {leftSection}
       </div>
-      <div className={`relative w-[1px] bg-white h-full group`}>
+      <div className={`relative w-[1px] bg-gray-300 h-full group`}>
         <div
           className="absolute -left-[2px] w-[6px] h-full cursor-col-resize z-50"
           onMouseDown={startDragging}
@@ -72,11 +72,11 @@ const TwoSections: React.FC<TwoSectionProps> = ({
 
         <div
           className={`absolute -left-[2px] w-[4px] h-full transition-all group-hover:bg-blue-500
-            ${isDragging && ' bg-blue-500 '}
+            ${isDragging && 'bg-blue-500 '}
           `}
         />
       </div>
-      <div className={`Layout-Content flex-1 bg-green-300 overflow-auto`}>
+      <div className={`Layout-Content flex-1 overflow-auto`}>
         {rightSection}
       </div>
     </div>

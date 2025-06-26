@@ -1,6 +1,6 @@
 // src/Block.tsx
 import React from 'react';
-import { Block } from '../types/types';
+import { Block } from '../../types/types';
 import { H1_STYLE } from '../styles/objects';
 
 interface BlockProps {
