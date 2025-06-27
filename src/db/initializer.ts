@@ -78,6 +78,7 @@ export async function InitPropertyTable(db: Database): Promise<boolean> {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
         type TEXT,
+        description TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       );
@@ -116,20 +117,95 @@ export async function InitNotePropertyRelationTable(
     await db.exec(`
       CREATE TABLE IF NOT EXISTS note_properties (
         note_id INTEGER,
+        property_id INTEGER,
         property_value_id INTEGER,
+        raw_value TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (note_id) REFERENCES notes(id),
+        FOREIGN KEY (property_id) REFERENCES properties(id),
         FOREIGN KEY (property_value_id) REFERENCES property_values(id),
-        PRIMARY KEY (note_id, property_value_id)
+        PRIMARY KEY (note_id, property_id, property_value_id)
       );
 
-      CREATE INDEX IF NOT EXISTS idx_note_properties_note_id ON note_properties(note_id);
-      CREATE INDEX IF NOT EXISTS idx_note_properties_property_key ON note_properties(property_value_id);
+      CREATE INDEX IF NOT EXISTS idx_note_properties_note_id
+        ON note_properties(note_id);
+      CREATE INDEX IF NOT EXISTS idx_note_properties_property_value_id
+        ON note_properties(property_value_id);
+      CREATE INDEX IF NOT EXISTS idx_note_properties_noteid_propertyid
+        ON note_properties (note_id, property_id);
     `);
     return true;
   } catch (e: any) {
     console.error(`Failed to create note_properties table: ${e.message}`);
+    return false;
+  }
+}
+
+export async function InitViewTable(db: Database): Promise<boolean> {
+  try {
+    await db.exec(`
+      CREATE TABLE IF NOT EXISTS views (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        description TEXT,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+    return true;
+  } catch (e: any) {
+    console.error(`Failed to create views table: ${e.message}`);
+    return false;
+  }
+}
+
+export async function InitViewPropertyRelationTable(
+  db: Database,
+): Promise<boolean> {
+  try {
+    await db.exec(`
+      CREATE TABLE IF NOT EXISTS view_properties (
+        view_id INTEGER,
+        property_id INTEGER,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (view_id, property_id),
+        FOREIGN KEY (view_id) REFERENCES views(id),
+        FOREIGN KEY (property_id) REFERENCES properties(id)
+      );
+
+      CREATE INDEX IF NOT EXISTS idx_view_properties_view_id ON view_properties(view_id);
+      CREATE INDEX IF NOT EXISTS idx_view_properties_property_id ON view_properties(property_id);
+    `);
+    return true;
+  } catch (e: any) {
+    console.error(`Failed to create view_properties table: ${e.message}`);
+    return false;
+  }
+}
+
+export async function InitNoteViewRelationTable(
+  db: Database,
+): Promise<boolean> {
+  try {
+    await db.exec(`
+      CREATE TABLE IF NOT EXISTS note_views (
+        note_id INTEGER,
+        view_id INTEGER,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (note_id, view_id),
+        FOREIGN KEY (note_id) REFERENCES notes(id),
+        FOREIGN KEY (view_id) REFERENCES views(id)
+      );
+
+      CREATE INDEX IF NOT EXISTS idx_note_views_note_id ON note_views(note_id);
+      CREATE INDEX IF NOT EXISTS idx_note_views_view_id ON note_views(view_id);
+    `);
+    return true;
+  } catch (e: any) {
+    console.error(`Failed to create note_views table: ${e.message}`);
     return false;
   }
 }

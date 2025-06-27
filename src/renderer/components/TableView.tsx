@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { db_Note } from '../../types/types';
 
-
 const E = window.electron;
 
 const TableView = () => {
