@@ -9,7 +9,7 @@ type TwoSectionProps = {
 };
 
 // Resizable two sections
-const TwoSections: React.FC<TwoSectionProps> = ({
+const TwoSection: React.FC<TwoSectionProps> = ({
   initalWidth = 250,
   minWidth = 0,
   maxWidth = 99999,
@@ -83,4 +83,4 @@ const TwoSections: React.FC<TwoSectionProps> = ({
   );
 };
 
-export default TwoSections;
+export default TwoSection;

@@ -6,6 +6,5 @@ export function useRefreshEffect(effect: () => void, depndencies: any[]) {
 
   useEffect(() => {
     effect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refreshCount, ...depndencies]);
 }

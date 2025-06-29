@@ -1,4 +1,4 @@
-import { useRefreshStore } from '../stores/refreshStore';
+import { useRefreshStore } from "../../stores/refreshStore";
 
 type AddNoteButtonProps = {
   text?: string;

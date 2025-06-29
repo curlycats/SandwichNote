@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { db_Note } from '../../types/note';
-import { useRefreshEffect } from '../hooks/useRefreshEffect';
+import { db_Note } from '../../../types/note';
+import { useRefreshEffect } from '../../hooks/useRefreshEffect';
 import AddNoteButton from './AddNoteButton';
 import CellRenderer from './CellRenderer';
 
@@ -46,7 +46,8 @@ const TableView = () => {
                 {/* {value} */}
                 <CellRenderer
                   type={'file'}
-                  text={value}
+                  field={key as keyof db_Note}
+                  note={note}
                 />
               </div>
             ))}
