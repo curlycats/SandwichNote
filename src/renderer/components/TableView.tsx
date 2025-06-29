@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { db_Note } from '../../types/note';
 import { useRefreshEffect } from '../hooks/useRefreshEffect';
 import AddNoteButton from './AddNoteButton';
+import CellRenderer from './CellRenderer';
 
 const E = window.electron;
 
@@ -42,7 +43,11 @@ const TableView = () => {
                 className="p-2 border-l border-gray-300 w-32 grow-0 shrink-0
                 overflow-x-hidden overflow-y-auto first:border-l-0"
               >
-                {value}
+                {/* {value} */}
+                <CellRenderer
+                  type={'file'}
+                  text={value}
+                />
               </div>
             ))}
           </div>

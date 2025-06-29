@@ -1,4 +1,4 @@
-type PropertyType =
+export type PropertyType =
   | 'file'
   | 'checkbox'
   | 'text'
