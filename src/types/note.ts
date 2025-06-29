@@ -11,5 +11,6 @@ export interface db_Note {
   title: string;
   created_at: string;
   updated_at: string;
-  content_json?: string; 
+  content_json: string;
 }
+

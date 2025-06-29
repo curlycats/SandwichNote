@@ -1,6 +1,6 @@
 import { open, Database } from 'sqlite';
 import { IsNoteExist } from './checkers';
-import { db_Note } from '../types/types';
+import { db_Note } from '../types/note';
 
 export async function LoadNote(db: Database, id?: number): Promise<db_Note> {
   if (id != null) {
@@ -65,7 +65,7 @@ export async function LoadNotes(db: Database): Promise<Array<db_Note>> {
   );
 }
 
-export async function CreateNote(db: Database): Promise<db_Note> {
+export async function CreateNote(db: Database): Promise<number> {
   const result = await db.run(
     `
     INSERT INTO notes DEFAULT VALUES;
@@ -77,9 +77,5 @@ export async function CreateNote(db: Database): Promise<db_Note> {
   `,
     [result.lastID, '{}'],
   );
-  // Retrieve and return the newly created note
-  const newNote = await db.get<db_Note>(`SELECT * FROM notes WHERE id = ?`, [
-    result.lastID,
-  ]);
-  return newNote!;
+  return result.lastID!;
 }

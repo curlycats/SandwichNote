@@ -3,7 +3,7 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 import { C_DB } from '../constants/channels';
 import { Database } from 'sqlite';
-import { db_Note } from '../db/types';
+import { db_Note } from '../types/note';
 
 const electronHandler = {
   db: {
@@ -17,6 +17,7 @@ const electronHandler = {
       ipcRenderer.invoke(C_DB.LOAD_NOTE, id),
     loadNotes: (): Promise<Array<db_Note>> =>
       ipcRenderer.invoke(C_DB.LOAD_NOTES),
+    createNote: (): Promise<number> => ipcRenderer.invoke(C_DB.CREATE_NOTE),
   },
 };
 

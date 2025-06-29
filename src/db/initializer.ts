@@ -31,6 +31,9 @@ export async function InitDatabase(dirPath: string): Promise<Database> {
   success = success && (await InitPropertyTable(db));
   success = success && (await InitPropertyValueTable(db));
   success = success && (await InitNotePropertyRelationTable(db));
+  success = success && (await InitViewTable(db));
+  success = success && (await InitViewPropertyRelationTable(db));
+  success = success && (await InitNoteViewRelationTable(db));
   if (!success) {
     throw new Error('Failed to initialize database tables');
   }

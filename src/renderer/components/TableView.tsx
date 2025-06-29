@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { db_Note } from '../../types/types';
+import { db_Note } from '../../types/note';
+import { useRefreshEffect } from '../hooks/useRefreshEffect';
+import AddNoteButton from './AddNoteButton';
 
 const E = window.electron;
 
 const TableView = () => {
   const [notes, setNotes] = useState<Array<db_Note>>([]);
-  useEffect(() => {
+  useRefreshEffect(() => {
     const fetchNotes = async () => {
       // E.db.drop('/Users/Flysandwich/Desktop/sandwichNote');
       const tempNotes = await E.db.loadNotes();
@@ -46,6 +48,7 @@ const TableView = () => {
           </div>
         );
       })}
+      <AddNoteButton />
     </div>
   );
 };
