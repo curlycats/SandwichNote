@@ -26,6 +26,7 @@ export async function InitDatabase(dirPath: string): Promise<Database> {
   });
 
   let success = true;
+  success = success && (await InitDatabaseTable(db));
   success = success && (await InitNoteTable(db));
   success = success && (await InitNoteContentTable(db));
   success = success && (await InitPropertyTable(db));
@@ -33,7 +34,6 @@ export async function InitDatabase(dirPath: string): Promise<Database> {
   success = success && (await InitNotePropertyRelationTable(db));
   success = success && (await InitViewTable(db));
   success = success && (await InitViewPropertyRelationTable(db));
-  success = success && (await InitDatabaseTable(db));
   success = success && (await InitDatabasePropertiesTable(db));
 
   if (!success) {
