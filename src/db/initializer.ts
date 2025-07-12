@@ -27,9 +27,9 @@ export async function InitDatabase(dirPath: string): Promise<Database> {
 
   let success = true;
   success = success && (await InitDatabaseTable(db));
+  success = success && (await InitPropertyTable(db));
   success = success && (await InitNoteTable(db));
   success = success && (await InitNoteContentTable(db));
-  success = success && (await InitPropertyTable(db));
   success = success && (await InitPropertyValueTable(db));
   success = success && (await InitNotePropertyRelationTable(db));
   success = success && (await InitViewTable(db));
