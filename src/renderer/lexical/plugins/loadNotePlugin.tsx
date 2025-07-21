@@ -14,13 +14,14 @@ export function LoadFromDBPlugin({
 
   useEffect(() => {
     async function load() {
-      const db = await E.db.init('/Users/Flysandwich/Desktop/sandwichNote');
       const note = await E.db.loadNote(1);
       console.log('note', note);
 
       if (note) {
         editor.update(() => {
-          const editorState = editor.parseEditorState(note.content_json);
+          const editorState = editor.parseEditorState(
+            note.content_json || '{}',
+          );
           console.log('editor:', editorState);
           editor.setEditorState(editorState);
         });

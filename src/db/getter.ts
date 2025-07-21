@@ -1,5 +1,5 @@
 import { Database } from 'sqlite';
-import { NoteWithProperties, PropertyValueType } from '../types/note';
+import { Note, PropertyValueType } from '../types/note';
 
 function parseRawValue(
   raw: string | null,
@@ -22,7 +22,7 @@ function parseRawValue(
 export async function getNotesForView(
   viewId: number,
   db: Database,
-): Promise<NoteWithProperties[]> {
+): Promise<Note[]> {
   // 1. get db_id
   const view = await db.get<{ database_id: number }>(
     `SELECT database_id FROM views WHERE id = ?`,
@@ -75,7 +75,7 @@ export async function getNotesForView(
       title: note.title ?? '',
       createdAt: note.created_at ?? '',
       updatedAt: note.updated_at ?? '',
-      contentJson: '', // 空字符串，因为我们不取内容
+      contentJson: '',
       properties: [],
     }));
   }
@@ -106,7 +106,7 @@ export async function getNotesForView(
   );
 
   // 5. 整合数据
-  const noteMap = new Map<number, NoteWithProperties>();
+  const noteMap = new Map<number, Note>();
 
   for (const note of rawNotes) {
     noteMap.set(note.id, {

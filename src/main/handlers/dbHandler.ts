@@ -2,7 +2,7 @@ import { ipcMain } from 'electron';
 import * as db_mod from '../../db/modifier';
 import * as db_initializer from '../../db/initializer';
 import { C_DB } from '../../constants/channels';
-import { db_Note } from '../../types/note';
+import { db_Note, db_NoteWithContent } from '../../types/note';
 
 const dbPath = '/Users/Flysandwich/Desktop/sandwichNote';
 const { LoadNote, UpdateNote, LoadNotes, CreateNote } = db_mod;
@@ -25,7 +25,7 @@ export function registerDBHandlers() {
 
   ipcMain.handle(
     C_DB.LOAD_NOTE,
-    async (_event, id: number): Promise<db_Note> => {
+    async (_event, id: number): Promise<db_NoteWithContent> => {
       if (!dbInstance) dbInstance = await InitDatabase(dbPath);
       return await LoadNote(dbInstance, id);
     },

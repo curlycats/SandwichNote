@@ -218,7 +218,7 @@ export async function InitDatabasePropertiesTable(
 ): Promise<boolean> {
   try {
     await db.exec(`
-      CREATE TABLE database_properties (
+      CREATE TABLE IF NOT EXISTS database_properties (
         database_id INTEGER,
         property_id INTEGER,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,

@@ -1,19 +1,23 @@
 import { open, Database } from 'sqlite';
 import { IsNoteExist } from './checkers';
-import { db_Note } from '../types/note';
+import { db_Note, db_NoteWithContent } from '../types/note';
 
-export async function LoadNote(db: Database, id?: number): Promise<db_Note> {
+export async function LoadNote(
+  db: Database,
+  id?: number,
+): Promise<db_NoteWithContent> {
   if (id != null) {
     const isNoteExist = await IsNoteExist(db, id);
     if (isNoteExist) {
       console.log(`Note ID ${id} exist in DB ${db.config.filename}`);
       // Fetch and return the existing note
-      const existingNote = await db.get<db_Note>(
+      const existingNote = await db.get<db_NoteWithContent>(
         `SELECT * FROM notes
         LEFT JOIN note_content ON notes.id = note_content.id
         WHERE notes.id = ?`,
         [id],
       );
+      console.log('existingNote', existingNote);
       return existingNote!;
     }
   }
@@ -23,9 +27,10 @@ export async function LoadNote(db: Database, id?: number): Promise<db_Note> {
     `,
   );
   // Retrieve and return the newly created note
-  const newNote = await db.get<db_Note>(`SELECT * FROM notes WHERE id = ?`, [
-    result.lastID,
-  ]);
+  const newNote = await db.get<db_NoteWithContent>(
+    `SELECT * FROM notes WHERE id = ?`,
+    [result.lastID],
+  );
   return newNote!;
 }
 

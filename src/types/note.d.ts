@@ -19,6 +19,10 @@ export type db_NoteContent = {
   content_json?: string | null;
 };
 
+export type db_NoteWithContent = db_Note & {
+  content_json?: string | null;
+};
+
 export type db_Property = {
   id: number;
   name?: string | null;
@@ -36,7 +40,7 @@ export type PropertyValueType = {
   rawValue: string | null;
 };
 
-export type NoteWithProperties = {
+export type Note = {
   id: number;
   title: string;
   createdAt: string;
