@@ -18,6 +18,10 @@ const electronHandler = {
     loadNotes: (): Promise<Array<db_Note>> =>
       ipcRenderer.invoke(C_DB.LOAD_NOTES),
     createNote: (): Promise<number> => ipcRenderer.invoke(C_DB.CREATE_NOTE),
+
+    // test
+    useTestData: (): Promise<boolean> =>
+      ipcRenderer.invoke(C_DB.__T_USE_TEST_DATA),
   },
 };
 

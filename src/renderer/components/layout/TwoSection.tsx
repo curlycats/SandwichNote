@@ -64,15 +64,15 @@ const TwoSection: React.FC<TwoSectionProps> = ({
       >
         {leftSection}
       </div>
-      <div className={`relative w-[1px] bg-gray-300 h-full group`}>
+      <div className={`relative w-[1px] bg-border h-full group`}>
         <div
           className="absolute -left-[2px] w-[6px] h-full cursor-col-resize z-50"
           onMouseDown={startDragging}
         />
 
         <div
-          className={`absolute -left-[2px] w-[4px] h-full transition-all group-hover:bg-blue-500
-            ${isDragging && 'bg-blue-500 '}
+          className={`absolute -left-[2px] w-[4px] h-full transition-all group-hover:bg-border-hover
+            ${isDragging && 'bg-border-hover'}
           `}
         />
       </div>

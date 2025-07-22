@@ -20,11 +20,11 @@ const TableView = () => {
 
   return (
     <div className="flex flex-col overflow-x-auto">
-      <div className="h-full flex flex-nowrap border-b last:border-b-0">
+      <div className="h-full flex flex-nowrap last:border-b-0">
         {Object.keys(notes[0] || {}).map((key) => (
           <div
             key={key}
-            className="p-2 border-l border-gray-300 w-32 grow-0 shrink-0
+            className="p-2 border-l border-b border-gray-300 w-32 grow-0 shrink-0
                 overflow-x-hidden overflow-y-auto first:border-l-0"
           >
             {key}
@@ -33,14 +33,11 @@ const TableView = () => {
       </div>
       {notes.map((note) => {
         return (
-          <div
-            className="h-full flex flex-nowrap border-b last:border-b-0 "
-            key={note.id}
-          >
+          <div className="h-full flex flex-nowrap" key={note.id}>
             {Object.entries(note).map(([key, value]) => (
               <div
                 key={key}
-                className="p-2 border-l border-gray-300 w-32 grow-0 shrink-0
+                className="p-2 border-l border-b border-gray-300 w-32 grow-0 shrink-0
                 overflow-x-hidden overflow-y-auto first:border-l-0"
               >
                 {/* {value} */}

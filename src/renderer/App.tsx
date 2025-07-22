@@ -4,7 +4,7 @@ import React, { ReactElement, useState } from 'react';
 import './styles/lexcial.css';
 import './styles/global.css';
 import './styles/baseTags.css';
-import BaseLayout from './layouts/baseLayout';
+import BaseLayout from './layouts/BaseLayout';
 
 const App: React.FC = () => {
   return <BaseLayout />;

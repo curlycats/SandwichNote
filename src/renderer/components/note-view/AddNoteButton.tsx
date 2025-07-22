@@ -1,3 +1,4 @@
+import refreshUI from "../../utils/refresh";
 import { useRefreshStore } from "../../stores/refreshStore";
 
 type AddNoteButtonProps = {
@@ -11,7 +12,7 @@ const AddNoteButton = ({ text = '+', onClick }: AddNoteButtonProps) => {
       const E = window.electron;
       E.db.createNote().then((id) => {
         console.log('New note created with ID:', id);
-        useRefreshStore.getState().triggerRefresh();
+        refreshUI();
       });
     };
   }

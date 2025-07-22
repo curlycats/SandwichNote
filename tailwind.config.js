@@ -6,7 +6,14 @@ module.exports = {
     './src/renderer/src/**/*.{svelte,js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        border: {
+          DEFAULT: '#e5e7eb',
+          hover: '#3b82f6',
+        },
+      },
+    },
   },
   plugins: [],
 };
