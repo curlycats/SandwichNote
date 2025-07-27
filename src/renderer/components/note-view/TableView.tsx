@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { db_Note } from '../../../types/note';
+import { db_Note, Note } from '../../../types/note';
 import { useRefreshEffect } from '../../hooks/useRefreshEffect';
 import AddNoteButton from './AddNoteButton';
 import CellRenderer from './CellRenderer';
@@ -7,11 +7,11 @@ import CellRenderer from './CellRenderer';
 const E = window.electron;
 
 const TableView = () => {
-  const [notes, setNotes] = useState<Array<db_Note>>([]);
+  const [notes, setNotes] = useState<Array<Note>>([]);
   useRefreshEffect(() => {
     const fetchNotes = async () => {
       // E.db.drop('/Users/Flysandwich/Desktop/sandwichNote');
-      const tempNotes = await E.db.loadNotes();
+      const tempNotes = await E.db.loadNotesForView(1);
       console.log('Fetched Notes:', tempNotes);
       setNotes(tempNotes);
     };
@@ -43,7 +43,7 @@ const TableView = () => {
                 {/* {value} */}
                 <CellRenderer
                   type={'file'}
-                  field={key as keyof db_Note}
+                  field={key as keyof Note}
                   note={note}
                 />
               </div>

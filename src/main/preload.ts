@@ -17,6 +17,8 @@ const electronHandler = {
       ipcRenderer.invoke(C_DB.LOAD_NOTE, id),
     loadNotes: (): Promise<Array<db_Note>> =>
       ipcRenderer.invoke(C_DB.LOAD_NOTES),
+    loadNotesForView: (viewId: number): Promise<Note[]> =>
+      ipcRenderer.invoke(C_DB.LOAD_NOTES_FOR_VIEW, viewId),
     createNote: (): Promise<number> => ipcRenderer.invoke(C_DB.CREATE_NOTE),
 
     // test

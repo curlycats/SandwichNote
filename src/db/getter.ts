@@ -19,9 +19,9 @@ function parseRawValue(
   return value;
 }
 
-export async function getNotesForView(
-  viewId: number,
+export async function GetNotesForView(
   db: Database,
+  viewId: number,
 ): Promise<Note[]> {
   // 1. get db_id
   const view = await db.get<{ database_id: number }>(

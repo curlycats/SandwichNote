@@ -7,6 +7,7 @@ export const C_DB = {
   UPDATE_NOTE: 'db:updateNote',
   CREATE_NOTE: 'db:createNote',
   LOAD_NOTES: 'db:loadNotes',
+  LOAD_NOTES_FOR_VIEW: 'db:loadNotesForView',
 
   // Test related channels. Don't use in production!
   __T_USE_TEST_DATA: 'db:test:useTestData',

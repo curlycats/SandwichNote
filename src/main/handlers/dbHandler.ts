@@ -2,9 +2,10 @@ import { ipcMain } from 'electron';
 import * as db_mod from '../../db/modifier';
 import * as db_initializer from '../../db/initializer';
 import { C_DB } from '../../constants/channels';
-import { db_Note, db_NoteWithContent } from '../../types/note';
+import { db_Note, db_NoteWithContent, Note } from '../../types/note';
 import { DB_PATH } from '../../constants/general';
 import { UseTestData } from '../../db/testTables';
+import { GetNotesForView } from '../../db/getter';
 
 const { LoadNote, UpdateNote, LoadNotes, CreateNote } = db_mod;
 const { InitDatabase } = db_initializer;
@@ -49,6 +50,16 @@ export function registerDBHandlers() {
     if (!dbInstance) dbInstance = await InitDatabase(DB_PATH);
     return await LoadNotes(dbInstance);
   });
+
+  ipcMain.handle(
+    C_DB.LOAD_NOTES_FOR_VIEW,
+    async (_event, viewId: number): Promise<Note[]> => {
+      if (!dbInstance) dbInstance = await InitDatabase(DB_PATH);
+      return await GetNotesForView(dbInstance, viewId);
+    },
+  );
+
+  // Test
 
   ipcMain.handle(C_DB.__T_USE_TEST_DATA, async (): Promise<boolean> => {
     db_initializer.DropDatabase(DB_PATH);
